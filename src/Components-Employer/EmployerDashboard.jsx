@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './EmployerDashboard.css'
 import DashboardIC from '../assets/Employer/DashboardIC.png'
 import PostJobs from '../assets/Employer/PostJob.png'
@@ -17,11 +18,20 @@ import Close from '../assets/Employer/close.png'
 import jobpost from '../assets/Employer/JOBPOST.png'
 import { Header } from '../Components-LandingPage/Header'
 import { JHeader } from '../Components-Jobseeker/JHeader'
+import PostedJobs from './PostedJobs';
+import ViewApplicants from './ViewApplicants';
+
 
 export const EmployerDashboard = () => {
 
+    const navigate = useNavigate();
     const [activetab,setActiveTab]= useState('Dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [selectedJob, setSelectedJob] = useState(null);
+
+    const handlePostaJobClick = () => {
+    navigate('/Job-portal/Employer/PostJob'); 
+  };
 
     const ToggleSidebar=()=>{
         setIsSidebarOpen(!isSidebarOpen)
@@ -44,7 +54,7 @@ export const EmployerDashboard = () => {
                 <img src={DashboardIC} height={15} width={15} alt="Dashboard" />
                 <div className='Enav-item'>Dashboard</div>
                 </div>
-                <div onClick={()=>setActiveTab('Post a Job')} className={activetab ==='Post a Job' ? "Active" :'Navbox'} >
+                <div onClick={() => {setActiveTab('Post a Job'); navigate('/Job-portal/Employer/PostJob');}} className={activetab ==='Post a Job' ? "Active" :'Navbox'} >
                 <img src={PostJobs} height={15} width={15} alt="Post a Job" />
                 <div className='Enav-item'>Post a Job</div>
                 </div>
@@ -143,7 +153,7 @@ export const EmployerDashboard = () => {
             <h2>Hi Yamuna,</h2>
             <p style={{fontWeight:"600"}}>Here's, What's Going on... </p>
             </div>
-            <button className='post-job-btn'>+ Post a Job</button>
+            <button className='post-job-btn'  onClick={handlePostaJobClick}> + Post a Job </button>
         </div>
         <div className='E-DashB-Over-View'>
             <h2 style={{marginLeft:"40px"}}>OverView</h2>
@@ -181,7 +191,7 @@ export const EmployerDashboard = () => {
         <div className='ERecent-Post-Cont'>
             <h3 style={{marginLeft:"40px"}}>Recently Posted Jobs</h3>
             <div className='ERecent-Post-Jobs'> 
-                 <button className='post-job-btn'>+ Post a Job</button>
+                 <button className='post-job-btn'onClick={handlePostaJobClick}>+ Post a Job</button>
             </div>
         </div>
         <div></div>
@@ -195,7 +205,21 @@ export const EmployerDashboard = () => {
         {activetab === 'Post a Job' && ( 
         <h1>Post Job</h1>)}
         {activetab === 'My job post' && (
-        <h1>Your Post</h1>)}
+  <PostedJobs
+    onViewApplicants={(job) => {
+      setSelectedJob(job);
+      setActiveTab('ViewApplicants');
+    }}
+  />
+)}
+
+{activetab === 'ViewApplicants' && (
+  <ViewApplicants
+    job={selectedJob}
+    onBack={() => setActiveTab('My job post')}
+  />
+)}
+
         {activetab === 'Analytics' && (
         <h1>Applicants Section</h1>)}
         {activetab === 'Billing' &&( 

@@ -1,0 +1,105 @@
+.view-applicants-page {
+  padding: 50px 20px;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.page-main-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #000000;
+}
+
+.applicants-list-container {
+  width: 100%;
+  max-width: 1150px;
+}
+
+.applicant-shared-card {
+  display: grid;
+  grid-template-columns: 2.2fr 1.3fr 1.3fr 1.1fr 1.6fr 1fr;
+  align-items: center;
+  justify-items: start;
+  padding: 15px 25px;
+  margin-bottom: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  min-height: 85px;
+  box-sizing: border-box;
+}
+
+.header-row-style {
+  background-color: #ffffff;
+}
+
+.header-avatar-placeholder {
+  font-size: 20px;
+  color: #d1d5db;
+  margin-right: 15px;
+}
+
+.header-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: #000000;
+}
+
+.header-sub-label {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.data-row-style {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.data-row-style:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.column-name-layout {
+  display: flex;
+  align-items: center;
+}
+
+.applicant-avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  background-color: #f3f4f6;
+}
+
+.text-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.applicant-full-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+}
+
+.applicant-role-info {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.applicant-data-text {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.applicant-status-text {
+  font-size: 13px;
+  color: #9ca3af;
+}
