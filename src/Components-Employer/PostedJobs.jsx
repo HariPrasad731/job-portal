@@ -2,20 +2,12 @@ import React, { useState } from 'react';
 import './PostedJobs.css';
 import { MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useJobs } from '../JobContext';
 
-const PostedJobs = ({ onViewApplicants }) => {   
+const PostedJobs = ({ onViewApplicants }) => {
   const navigate = useNavigate();
 
-  const [jobs, setJobs] = useState([
-  { id: 1, title: 'UI/UX Designer', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 0, rejected: 3 },
-  { id: 2, title: 'Front End Developer', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 3, title: 'Scrum Master', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 4, title: 'Team Lead', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 5, title: 'Tester', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 6, title: 'IT Analyst', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 7, title: 'IT Coordinator', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 },
-  { id: 8, title: 'Systems Administrator', location: 'Coimbatore', date: '24/01/2026', applicants: 20, new: 15, reviewed: 12, hired: 5, rejected: 3 }
-]);
+  const { jobs, deleteJob } = useJobs();
 
   const [activeMenu, setActiveMenu] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,12 +15,12 @@ const PostedJobs = ({ onViewApplicants }) => {
   const [selectedJobId, setSelectedJobId] = useState(null);
 
   const toggleMenu = (id) => {
-    setActiveMenu(activeMenu === id ? null : id);
+    setActiveMenu((prev) => (prev === id ? null : id));
   };
 
-  const handleEditClick = (job) => {
+  const handleEditClick = (jobId) => {
     setActiveMenu(null);
-    navigate('/Job-portal/Employer/EditJob', { state: job });
+    navigate(`/Job-portal/Employer/EditJob/${jobId}`);
   };
 
   const handleDeleteClick = (id) => {
@@ -38,10 +30,27 @@ const PostedJobs = ({ onViewApplicants }) => {
   };
 
   const confirmDelete = () => {
-    setJobs(jobs.filter(job => job.id !== selectedJobId));
+    deleteJob(selectedJobId);
     setShowDeleteModal(false);
     setShowSuccessToast(true);
-    setTimeout(() => setShowSuccessToast(false), 3000);
+
+    setTimeout(() => {
+      setShowSuccessToast(false);
+    }, 3000);
+  };
+
+  /*
+    🔥 ADDED: Safe View Applicants handler
+
+    - If parent passed onViewApplicants → use it (your existing logic)
+    - Else → use dynamic route navigation
+  */
+  const handleViewApplicants = (job) => {
+    if (onViewApplicants) {
+      onViewApplicants(job);
+    } else {
+      navigate(`/Job-portal/Employer/ViewApplicants/${job.id}`);
+    }
   };
 
   return (
@@ -49,52 +58,90 @@ const PostedJobs = ({ onViewApplicants }) => {
       <h2 className="postedjobs-header">Jobs posted by you</h2>
 
       <div className="postedjobs-grid-layout postedjobs-table-header">
-        <div /> 
+        <div />
         <span className="postedjobs-label">Applicants</span>
         <span className="postedjobs-label">New</span>
         <span className="postedjobs-label">Reviewed</span>
         <span className="postedjobs-label">Hired</span>
         <span className="postedjobs-label">Rejected</span>
-        <div /> 
+        <div />
       </div>
 
       <div className="postedjobs-list">
+
+        {jobs.length === 0 && (
+          <div className="postedjobs-empty">
+            No jobs posted yet.
+          </div>
+        )}
+
         {jobs.map((job) => (
           <div key={job.id} className="postedjobs-grid-layout postedjobs-card">
+            
             <div className="postedjobs-info">
-              <h3>{job.title}</h3>
+              <h3 className="postedjobs-title">
+                {job.jobTitle}
+                {job.isVerified && (
+                  <span className="postedjobs-verified">
+                    ✔ Verified
+                  </span>
+                )}
+              </h3>
+
               <p className="postedjobs-loc flex items-center gap-2">
                 <MapPin size={16} className="text-gray-500" />
-                {job.location}
+                {[job.city, job.state, job.country]
+                  .filter(Boolean)
+                  .join(', ')}
               </p>
-              <small>Created on: {job.date}</small>
+
+              <small>
+                Created on: {job.postedDate || '-'}
+              </small>
             </div>
 
-            <span className="postedjobs-badge">{job.applicants}</span>
-            <span className="postedjobs-badge">{job.new}</span>
-            <span className="postedjobs-badge">{job.reviewed}</span>
-            <span className="postedjobs-badge">{job.hired}</span>
-            <span className="postedjobs-badge">{job.rejected}</span>
+            <span className="postedjobs-badge">{job.applicants || 0}</span>
+            <span className="postedjobs-badge">{job.new || 0}</span>
+            <span className="postedjobs-badge">{job.reviewed || 0}</span>
+            <span className="postedjobs-badge">{job.hired || 0}</span>
+            <span className="postedjobs-badge">{job.rejected || 0}</span>
 
             <div className="postedjobs-actions">
-              
+
+              {/* 🔥 UPDATED: Now using safe handler */}
               <button
                 className="postedjobs-view-btn"
-                onClick={() => onViewApplicants(job)}
+                onClick={() => handleViewApplicants(job)}
               >
                 View applicants
               </button>
 
               <div className="postedjobs-menu-wrapper">
-                <button onClick={() => toggleMenu(job.id)} className="postedjobs-dots">⋮</button>
+                <button
+                  onClick={() => toggleMenu(job.id)}
+                  className="postedjobs-dots"
+                >
+                  ⋮
+                </button>
+
                 {activeMenu === job.id && (
                   <div className="postedjobs-dropdown">
-                    <button onClick={() => handleEditClick(job)}>Edit</button>
-                    <button onClick={() => handleDeleteClick(job.id)} className="delete-opt">Delete</button>
+                    <button onClick={() => handleEditClick(job.id)}>
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleDeleteClick(job.id)}
+                      className="delete-opt"
+                    >
+                      Delete
+                    </button>
                   </div>
                 )}
               </div>
+
             </div>
+
           </div>
         ))}
       </div>
@@ -104,8 +151,18 @@ const PostedJobs = ({ onViewApplicants }) => {
           <div className="postedjobs-modal">
             <p>Do you want to remove this job post?</p>
             <div className="postedjobs-modal-btns">
-              <button onClick={() => setShowDeleteModal(false)} className="btn-cancel">Cancel</button>
-              <button onClick={confirmDelete} className="btn-delete">Delete</button>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="btn-cancel"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="btn-delete"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -113,7 +170,13 @@ const PostedJobs = ({ onViewApplicants }) => {
 
       {showSuccessToast && (
         <div className="postedjobs-toast">
-          Your job post has been removed <span className="close-icon" onClick={() => setShowSuccessToast(false)}>⊗</span>
+          Your job post has been removed
+          <span
+            className="close-icon"
+            onClick={() => setShowSuccessToast(false)}
+          >
+            ⊗
+          </span>
         </div>
       )}
     </div>

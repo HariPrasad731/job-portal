@@ -28,6 +28,9 @@ export const EmployerDashboard = () => {
     const [activetab,setActiveTab]= useState('Dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [selectedJob, setSelectedJob] = useState(null);
+    // 🔥 Added to detect route-based navigation
+    const isRouteViewApplicants = window.location.pathname.includes('/ViewApplicants/');
+
 
     const handlePostaJobClick = () => {
     navigate('/Job-portal/Employer/PostJob'); 
@@ -213,7 +216,7 @@ export const EmployerDashboard = () => {
   />
 )}
 
-{activetab === 'ViewApplicants' && (
+{activetab === 'ViewApplicants' && !isRouteViewApplicants && (
   <ViewApplicants
     job={selectedJob}
     onBack={() => setActiveTab('My job post')}
