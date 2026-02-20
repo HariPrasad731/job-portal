@@ -1,40 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 .jobpost-page-title {
-    background-color: #ffffff;
+    background-color: #FAFCFF; /* Light background if needed, otherwise #fff */
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
 }
 
 .jobpost-form-header {
     text-align: center;
-    padding: 130px 0 30px;
+    padding: 110px 0 60px;
 }
 
 .jobpost-form-header h1 {
-    font-size: 36px;
-    color: #0d2344;
-    font-weight: 500;
-    margin-bottom: 10px;
+    font-size: 32px;
+    color: #0F2A4A;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .jobpost-form-header p {
-    color: #828282;
+    color: #8C95A1;
     font-size: 14px;
 }
 
 .jobpost-form-container {
-    background: #fff;
-    border: 1px solid #e4dede;
-    border-radius: 20px;
-    padding: 60px;
-    max-width: 950px;
-    margin: 0 auto 100px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 12px;
+    /* Reduced bottom padding from 40px to 20px */
+    padding: 40px 60px 20px 60px; 
+    max-width: 850px;
+    /* Reduced bottom margin from 100px to 20px */
+    margin: 0 auto 20px; 
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.02);
 }
 
 .jobpost-form-row {
     display: flex;
     align-items: center; 
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .jobpost-top-align {
@@ -42,214 +46,236 @@
 }
 
 .jobpost-label {
-    width: 200px;
-    min-width: 200px;
+    width: 40px;
+    min-width: 160px;
     font-size: 14px;
-    color: #828282;
+    color: #8C95A1;
+    font-weight: 400;
 }
 
-/* Glow Effect */
 .jobpost-input,
-.jobpost-textarea,
-.jobpost-dropdown-trigger {
+.jobpost-select,
+.jobpost-textarea {
+    flex: 1;
     width: 100%;
-    padding: 12px;
-    border: 1px solid #EAEAEA;
-    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
     font-size: 14px;
-    outline: none;
     color: #333333;
-    transition: all 0.2s ease-in-out;
-    background-color: #fff;
-    box-sizing: border-box;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.jobpost-select {
+    color: #A0AAB5; 
+}
+
+.jobpost-select option {
+    color: #333333; 
+}
+
+.jobpost-input::placeholder,
+.jobpost-textarea::placeholder {
+    color: #A0AAB5;
 }
 
 .jobpost-input:focus,
-.jobpost-textarea:focus,
-.jobpost-dropdown.jobpost-is-active .jobpost-dropdown-trigger {
-    border-color: #1E88E5;
-    box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.2);
+.jobpost-select:focus,
+.jobpost-textarea:focus {
+    border-color: #2D9CDB;
 }
 
-.jobpost-dropdown {
-    flex: 1;
-    position: relative;
-}
-
-.jobpost-dropdown-trigger {
+/* Select styling */
+.jobpost-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A0AAB5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
     cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.jobpost-dropdown-panel {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border: 1px solid #EAEAEA;
-    border-radius: 12px;
-    padding: 20px;
-    z-index: 100;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    margin-top: 5px;
-}
-
-.jobpost-is-active .jobpost-dropdown-panel {
-    display: block;
-}
-
-.jobpost-options-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    max-height: 250px;
-    overflow-y: auto;
-    align-items: start;
-}
-
-
-
-.jobpost-checkbox-group {
+/* Checkboxes */
+/* 1. Grid layout with 3 equal columns */
+.jobpost-inline-group {
     flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 15px 40px; 
-    padding: 12px 20px;
-    border: 1px solid #EAEAEA;
-    border-radius: 8px;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 110px; /* Creates 3 strict, equal columns */
+    padding: 0 16px; 
+    height: 44px; 
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* 2. Text color, spacing, and left-alignment */
 .jobpost-checkbox-label {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: #828282;
+    gap: 12px; 
     font-size: 14px;
+    color: #A0AAB5; 
     cursor: pointer;
-    white-space: nowrap;
-}
-
-.jobpost-checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
     margin: 0;
-    accent-color: #2D9CDB;
+    font-weight: 400;
+    /* This forces every checkbox to anchor to the exact left edge of its 33% column */
+    justify-self: start; 
 }
 
+/* 3. Checkbox Size */
+.jobpost-checkbox-label input[type="checkbox"] {
+    width: 20px;  
+    height: 20px; 
+    margin: 0; 
+    cursor: pointer;
+}
 
-.jobpost-boxed-container {
+/* Radio Container (Job Category) */
+.jobpost-radio-container {
     flex: 1;
-    border: 1px solid #EAEAEA;
-    border-radius: 8px;
-    padding: 10px 15px;
-}
-
-.jobpost-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.jobpost-grid-2-rows {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px 20px;
-}
-
-.jobpost-grid-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 150px; 
+    border: 1px solid #E5E7EB; 
+    border-radius: 6px;
+    padding: 0 16px;
+    height: 44px; 
 }
 
-.jobpost-grid-item span {
-    min-width: 50px;
-    color: #828282;
+.jobpost-radio-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
     font-size: 14px;
+    color: #8C95A1;
+    cursor: pointer;
 }
 
+.jobpost-radio-label input[type="radio"] {
+    accent-color: #666;
+    width: 20px;
+    height: 20px;
+}
+
+/* Skills Area */
+.jobpost-skills-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* Prevents the container from expanding beyond the flex row limits */
+    min-width: 0; 
+}
+
+.skills-input {
+    width: 100%;
+    /* This ensures padding/borders don't make the box wider than 100% */
+    box-sizing: border-box; 
+    border: 1px solid #E5E7EB;
+    border-radius: 6px 6px 0 0; /* Keeps top corners rounded, bottom flat */
+    padding: 12px 16px;
+    outline: none;
+}
+
+.jobpost-tags-area {
+    width: 100%;
+    box-sizing: border-box; /* Forces it to match the white input exactly */
+    background-color: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.jobpost-tag {
+    background-color: #6B7280;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.jobpost-tag button {
+    background: none;
+    border: none;
+    color: #FFF;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* Input with Icon Container */
+.jobpost-input-icon-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.jobpost-plus-icon {
+    position: absolute;
+    right: 16px;
+    font-size: 20px;
+    color: #A0AAB5;
+    cursor: pointer;
+}
+
+/* Textarea */
 .jobpost-textarea {
-    min-height: 180px;
-    resize: none;
+    min-height: 140px;
+    resize: vertical;
 }
 
-
+/* Buttons */
 .jobpost-actions {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 50px;
+    gap: 80px;
+    margin-top: 0; /* Remove top margin since container margin handles it */
+    margin-bottom: 60px; /* Space before the footer */
+    width: 100%;
 }
 
 .jobpost-btn-cancel,
-.jobpost-btn-post {
-    padding: 15px 70px;
-    border-radius: 12px;
-    font-weight: 600;
+.jobpost-btn-preview {
+    padding: 12px 40px;
+    border-radius: 6px;
+    font-weight: 700;
     font-size: 20px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    width: 160px;
 }
 
 .jobpost-btn-cancel {
-    border: 1px solid #EAEAEA;
-    background: #fff;
-    color: #333;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    color: #333333;
 }
 
-.jobpost-btn-post {
-    background: #1E88E5;
-    color: #fff;
+.jobpost-btn-cancel:hover {
+    background: #F9FAFB;
+}
+
+.jobpost-btn-preview {
+    background: #2D9CDB;
     border: none;
+    color: #FFFFFF;
 }
 
-.jobpost-btn-post:hover {
-    background: #1565C0;
+.jobpost-btn-preview:hover {
+    background: #2582EB;
 }
-
-.jobpost-arrow {
-  font-size: 16px;
-  color: #666;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.jobpost-arrow:hover {
-  color: #2563eb;
-  transform: translateX(3px);
-}
-
-.jobpost-manual-exp-container {
-  grid-column: 3; 
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding-left: 5px;
-}
-
-.jobpost-manual-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #666;
-  white-space: nowrap;
-}
-
-.jobpost-manual-input {
-  width: 80%;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 13px;
-  outline: none;
-}
-
-.jobpost-manual-input:focus {
-  border-color: #007bff;
-}
-
-
-
