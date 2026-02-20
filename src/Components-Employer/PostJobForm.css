@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .jobpost-page-title {
-    background-color: #FAFCFF; /* Light background if needed, otherwise #fff */
+    background-color: #FAFCFF;
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
 }
@@ -27,10 +27,8 @@
     background: #FFFFFF;
     border: 1px solid #EBEBEB;
     border-radius: 12px;
-    /* Reduced bottom padding from 40px to 20px */
     padding: 40px 60px 20px 60px; 
     max-width: 850px;
-    /* Reduced bottom margin from 100px to 20px */
     margin: 0 auto 20px; 
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.02);
 }
@@ -87,7 +85,6 @@
     border-color: #2D9CDB;
 }
 
-/* Select styling */
 .jobpost-select {
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A0AAB5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -97,12 +94,10 @@
     cursor: pointer;
 }
 
-/* Checkboxes */
-/* 1. Grid layout with 3 equal columns */
 .jobpost-inline-group {
     flex: 1;
     display: grid; 
-    grid-template-columns: 1fr 1fr 110px; /* Creates 3 strict, equal columns */
+    grid-template-columns: 1fr 1fr 110px;
     padding: 0 16px; 
     height: 44px; 
     border: 1px solid #E5E7EB;
@@ -112,7 +107,6 @@
     box-sizing: border-box;
 }
 
-/* 2. Text color, spacing, and left-alignment */
 .jobpost-checkbox-label {
     display: flex;
     align-items: center;
@@ -122,11 +116,9 @@
     cursor: pointer;
     margin: 0;
     font-weight: 400;
-    /* This forces every checkbox to anchor to the exact left edge of its 33% column */
     justify-self: start; 
 }
 
-/* 3. Checkbox Size */
 .jobpost-checkbox-label input[type="checkbox"] {
     width: 20px;  
     height: 20px; 
@@ -134,7 +126,6 @@
     cursor: pointer;
 }
 
-/* Radio Container (Job Category) */
 .jobpost-radio-container {
     flex: 1;
     display: flex;
@@ -164,28 +155,25 @@
     height: 20px;
 }
 
-/* Skills Area */
 .jobpost-skills-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* Prevents the container from expanding beyond the flex row limits */
     min-width: 0; 
 }
 
 .skills-input {
     width: 100%;
-    /* This ensures padding/borders don't make the box wider than 100% */
     box-sizing: border-box; 
     border: 1px solid #E5E7EB;
-    border-radius: 6px 6px 0 0; /* Keeps top corners rounded, bottom flat */
+    border-radius: 6px 6px 0 0;
     padding: 12px 16px;
     outline: none;
 }
 
 .jobpost-tags-area {
     width: 100%;
-    box-sizing: border-box; /* Forces it to match the white input exactly */
+    box-sizing: border-box;
     background-color: #F3F4F6;
     border: 1px solid #E5E7EB;
     border-top: none;
@@ -217,7 +205,6 @@
     line-height: 1;
 }
 
-/* Input with Icon Container */
 .jobpost-input-icon-wrapper {
     flex: 1;
     position: relative;
@@ -233,19 +220,17 @@
     cursor: pointer;
 }
 
-/* Textarea */
 .jobpost-textarea {
     min-height: 140px;
     resize: vertical;
 }
 
-/* Buttons */
 .jobpost-actions {
     display: flex;
     justify-content: center;
     gap: 80px;
-    margin-top: 0; /* Remove top margin since container margin handles it */
-    margin-bottom: 60px; /* Space before the footer */
+    margin-top: 0;
+    margin-bottom: 60px;
     width: 100%;
 }
 

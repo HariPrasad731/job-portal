@@ -75,7 +75,7 @@ const PostJobForm = () => {
           <p>Complete the steps below to reach thousands of qualified candidates</p>
         </header>
 
-        {/* --- MAIN FORM CONTAINER --- */}
+        
         <div className="jobpost-form-container">
           <form className="jobpost-form" onSubmit={handleSubmit}>
 
@@ -228,7 +228,7 @@ const PostJobForm = () => {
           </form>
         </div>
 
-        {/* --- ACTIONS MOVED OUTSIDE OF THE WHITE CONTAINER --- */}
+        
         <div className="jobpost-actions">
           <button type="button" className="jobpost-btn-cancel" onClick={() => navigate('/jobportal')}>
             Cancel
