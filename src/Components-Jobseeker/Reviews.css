@@ -1,0 +1,138 @@
+.rev-dash-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 20px;
+}
+
+.rev-dash-main-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: rgba(0, 0, 0, 1);
+    font-size: 32px;
+}
+
+.rev-dash-overview-card {
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.rev-dash-overview-heading {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.rev-dash-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    margin-top: 10px;
+    gap: 40px; 
+}
+
+.rev-dash-label {
+    color: #888;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.rev-dash-rating-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.rev-dash-stat-number {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.rev-dash-stars-wrapper,
+.rev-dash-stars-row {
+    display: flex;
+    gap: 10px; 
+}
+
+.rev-dash-star-img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    filter: invert(41%) sepia(96%) saturate(1935%) hue-rotate(352deg) brightness(97%) contrast(93%);
+}
+
+.rev-dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px; 
+    column-gap: 120px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.rev-dash-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 24px;
+    background-color: #fff;
+}
+
+.rev-dash-card-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.rev-dash-stars-row {
+    margin-bottom: 15px;
+}
+
+.rev-dash-reviewer-info {
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.rev-dash-reviewer-name {
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.rev-dash-review-date {
+    color: #999;
+    font-size: 13px;
+}
+
+.rev-dash-review-text {
+    color: rgba(0, 0, 0, 0.6); 
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .rev-dash-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .rev-dash-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .rev-dash-overview-card {
+        max-width: 100%;
+    }
+}
