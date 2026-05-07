@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'; // <-- Updated import for the PDF table
+import autoTable from 'jspdf-autotable';
 import './Tickets.css';
 
 // Import images from assets folder
@@ -14,8 +14,9 @@ import WatchPurple from '../assets/WatchPurple.png';
 const Tickets = () => {
   const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, title: '', value: '' });
   
-  // Ref to capture ONLY the Ticket List section for Image Export
+  // Refs
   const ticketListRef = useRef(null);
+  const exportRef = useRef(null); // Ref for handling outside clicks on the export menu
 
   // Filter States
   const [priorityFilter, setPriorityFilter] = useState('High');
@@ -26,10 +27,29 @@ const Tickets = () => {
 
   // State to hold and update the tickets in the list
   const [ticketsList, setTicketsList] = useState([
-    { id: 'TKT-1023', subject: 'Payment not processing.', assignee: 'Trisha', time: '2h mins ago', priority: 'High' },
+    { id: 'TKT-1023', subject: 'Payment not processing.', assignee: 'Trisha', time: '2 hours ago', priority: 'High' },
     { id: 'TKT-0987', subject: 'Login failure', assignee: 'Hari', time: '22 mins ago', priority: 'High' },
     { id: 'TKT-0876', subject: 'Application error on submit', assignee: 'Lithin', time: '18 mins ago', priority: 'High' }
   ]);
+
+  // Close export dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (exportRef.current && !exportRef.current.contains(event.target)) {
+        setExportMenuOpen(false);
+      }
+    };
+
+    if (exportMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [exportMenuOpen]);
 
   const handleMouseMove = (e, title, value) => {
     setTooltip({ visible: true, x: e.clientX, y: e.clientY, title, value });
@@ -95,7 +115,6 @@ const Tickets = () => {
         const tableColumn = ["Ticket ID", "Subject", "Assignee", "Time", "Priority"];
         const tableRows = filteredTickets.map(t => [t.id, t.subject, t.assignee, t.time, t.priority]);
         
-        // Fixed PDF Table generation
         autoTable(doc, { head: [tableColumn], body: tableRows, startY: 20 });
         doc.save('Ticket_List_Report.pdf'); 
       } 
@@ -116,7 +135,6 @@ const Tickets = () => {
       } 
       
       else if (format === 'Image') {
-        // Now it will only target the ticket list box
         if (ticketListRef.current) {
           const canvas = await html2canvas(ticketListRef.current, { scale: 2 });
           const imgData = canvas.toDataURL('image/png');
@@ -294,7 +312,7 @@ const Tickets = () => {
       {/* --- 4. Agent Performance Section --- */}
       <div className="agent-performance-section">
         <h3 className="section-title">Agent Performance</h3>
-        
+
         <div className="table-container">
           <table className="agent-table">
             <thead>
@@ -370,13 +388,12 @@ const Tickets = () => {
       </div>
 
       {/* --- 5. Ticket List Section --- */}
-      {/* We apply the ticketListRef here so the Image Export screenshots only this box */}
       <div className="ticket-list-section" ref={ticketListRef}>
         <div className="ticket-list-header">
           <div className="ticket-list-header-left">
             <h3 className="section-title">Ticket List</h3>
             <div className="ticket-filters">
-              
+
               <div className="filter-box">
                 <span className="filter-label">Status:</span>
                 <select className="filter-select">
@@ -387,7 +404,7 @@ const Tickets = () => {
 
               <div className="filter-box">
                 <span className="filter-label">Priority:</span>
-                <select 
+                <select
                   className="filter-select"
                   value={priorityFilter}
                   onChange={(e) => setPriorityFilter(e.target.value)}
@@ -401,19 +418,24 @@ const Tickets = () => {
 
               <div className="filter-box">
                 <span className="filter-label">Category:</span>
-                <select className="filter-select text-blue"><option>Payment Issues</option></select>
+                <select className="filter-select text-blue" defaultValue="Payment Issues">
+                  <option value="Payment Issues">Payment Issues</option>
+                  <option value="Account Issues">Account Issues</option>
+                  <option value="Document & Compliance Issues">Document & Compliance Issues</option>
+                  <option value="Others">Others</option>
+                </select>
               </div>
             </div>
           </div>
-          
+
           <div className="ticket-list-actions">
-            
+
             {/* Custom Export Dropdown Component */}
-            <div className="export-dropdown-wrapper">
+            <div className="export-dropdown-wrapper" ref={exportRef}>
               <button className="btn-export" onClick={() => setExportMenuOpen(!exportMenuOpen)}>
                 Export <span className="btn-caret">⌄</span>
               </button>
-              
+
               {exportMenuOpen && (
                 <div className="export-menu">
                   <div className="export-menu-item" onClick={() => handleExportSelect('PDF Document')}>
@@ -455,15 +477,15 @@ const Tickets = () => {
                 </div>
                 <div className="ticket-row-right">
                   <span className="ticket-time">{ticket.time}</span>
-                  
+
                   <div className={`ticket-priority color-${ticket.priority.toLowerCase()}`}>
                     <span className={`priority-ring bg-${ticket.priority.toLowerCase()}`}></span>
                     <span>{ticket.priority}</span>
                     <svg className="dropdown-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    
-                    <select 
-                      className="hidden-select" 
-                      value={ticket.priority} 
+
+                    <select
+                      className="hidden-select"
+                      value={ticket.priority}
                       onChange={(e) => handlePriorityChange(ticket.id, e.target.value)}
                     >
                       <option value="High">High</option>
